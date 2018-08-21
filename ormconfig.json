@@ -1,0 +1,19 @@
+{
+    "type": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "username": "",
+    "password": "",
+    "database": "alive_place",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+        "api/graphql-type/*.ts"
+    ],
+    "migrations": [
+        "src/migration/**/*.ts"
+    ],
+    "subscribers": [
+        "src/subscriber/**/*.ts"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "mongo_host": "mongodb://localhost:27017/yggdrasil",
+    "express_port": 3000,
+    "firebase_database_url": "",
+    "firebase_account_file": "",
+    "facebook_fields": "me?fields=id,name,email,birthday,first_name,last_name",
+    "google_client_id": "",
+    "google_client_secret": "",
+    "google_maps_key": ""
+}

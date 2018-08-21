@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+dist/
+.vscode/last.sql
+.vscode/temp.sql
+.tmp/
+npm-debug.log

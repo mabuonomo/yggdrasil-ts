@@ -1,8 +1,8 @@
 ## YGGDRASIL
 
 <div align="center">
-  <a href="http://typeorm.io/">
-    <img src="https://github.com/mabuonomo/yggdrasil/raw/master/resources/logo.png" width="492" height="228">
+  <a href="#">
+    <img src="https://github.com/mabuonomo/yggdrasil/raw/master/resources/logo.jpg" height="228">
   </a>
   <br>
   <br>

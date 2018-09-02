@@ -13,6 +13,9 @@
 A prototype of a nodejs server, written in Typescript, with JWT authentication, GraphQL and TypeORM
 
 ## Run
+First compile the ts files.
+
+After execute server
 ```bash
 npm start run
 ```

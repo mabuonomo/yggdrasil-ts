@@ -18,7 +18,6 @@
     "nodemon": "^1.17.2"
   },
   "dependencies": {
-    "@google/maps": "^0.4.5",
     "@types/bcrypt": "^2.0.0",
     "@types/express-graphql": "^0.6.1",
     "@types/graphql": "^0.13.4",

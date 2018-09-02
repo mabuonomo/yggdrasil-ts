@@ -64,7 +64,7 @@ password: password
 ```
 
 ### GraphQL with JWT authentication
-To simulate GraphQL with JWT authentication you can use Insomnia (https://support.insomnia.rest/)
+To simulate GraphQL with JWT authentication you can use Insomnia (https://insomnia.rest/)
 ```
 Endpoint
 http://localhost:3000/api

@@ -49,7 +49,7 @@ mutation add($newUser: UserInput!) {
 ```
 
 ### Login (get JWT token):
-You can use Inmsomia or Postman
+You can use Insomnia or Postman
 ```
 Endpoint 
 /auth
@@ -61,7 +61,7 @@ password: password
 ```
 
 ### GraphQL with JWT authentication
-To simulate GraphQL with JWT authentication you can use Inmsomia (https://support.insomnia.rest/)
+To simulate GraphQL with JWT authentication you can use Insomnia (https://support.insomnia.rest/)
 ```
 Endpoint
 http://localhost:3000/api

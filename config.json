@@ -6,5 +6,13 @@
     "facebook_fields": "me?fields=id,name,email,birthday,first_name,last_name",
     "google_client_id": "",
     "google_client_secret": "",
-    "google_maps_key": ""
+    "google_maps_key": "",
+    "google_scopes" : [
+        "https://www.googleapis.com/auth/plus.login",
+        "https://www.googleapis.com/auth/plus.me",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "email"
+    ]
+
 }

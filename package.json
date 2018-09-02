@@ -1,5 +1,5 @@
 {
-  "name": "yggdrasil",
+  "name": "code_arena",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,11 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mabuonomo/yggdrasil.git"
+    "url": "git+https://mario_buonomo@bitbucket.org/mario_buonomo/code_arena.git"
   },
   "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/mabuonomo/yggdrasil.git#readme",
+  "homepage": "https://bitbucket.org/mario_buonomo/code_arena#readme",
   "devDependencies": {
     "nodemon": "^1.17.2"
   },
@@ -27,6 +27,7 @@
     "@types/node": "^10.5.8",
     "@types/passport": "^0.4.6",
     "@types/passport-jwt": "^3.0.1",
+    "@types/passport-local": "^1.0.33",
     "bcrypt": "^3.0.0",
     "class-transformer": "^0.1.9",
     "cors": "^2.8.4",
@@ -34,15 +35,11 @@
     "express-fileupload": "^0.4.0",
     "express-graphql": "^0.6.12",
     "fbgraph": "^1.4.1",
-    "firebase-admin": "^5.11.0",
-    "googleapis": "^26.0.1",
     "graphql": "^0.13.2",
     "implement-js": "0.0.20",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.3",
     "morgan": "^1.9.0",
-    "node-telegram-bot-api": "^0.30.0",
-    "node-wit": "^4.3.0",
     "npm": "^5.7.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

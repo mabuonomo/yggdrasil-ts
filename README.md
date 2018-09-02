@@ -10,4 +10,10 @@
 
 [![dependencies Status](https://david-dm.org/mabuonomo/yggdrasil/status.svg)](https://david-dm.org/mabuonomo/yggdrasil)
 
-work in progress
+A prototype of a nodejs server, written in Typescript, with JWT authentication, GraphQL and TypeORM
+
+## Run
+```bash
+npm start run
+```
+

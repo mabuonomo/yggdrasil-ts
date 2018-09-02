@@ -4,7 +4,7 @@
     "port": 27017,
     "username": "",
     "password": "",
-    "database": "alive_place",
+    "database": "yggdrasil",
     "synchronize": true,
     "logging": false,
     "entities": [

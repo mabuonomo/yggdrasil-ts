@@ -76,4 +76,8 @@ Authorization Bearer YOUR_JWT_TOKEN
 
 ```
 
-
+## Thanks to
+* NodeJS        https://nodejs.org
+* TypeGraphql   https://github.com/19majkel94/type-graphql
+* TypeOrm       https://github.com/typeorm/typeorm
+* JWT           https://jwt.io/

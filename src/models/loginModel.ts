@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType as ObjectTypeQL, Field as FieldQL } from "type-graphql";
 
-@ObjectType()
+@ObjectTypeQL()
 export class LoginModel {
 
     constructor(result: boolean, jwt: string, message: string, code: number) {
@@ -11,15 +11,15 @@ export class LoginModel {
         this.code = code;
     }
 
-    @Field()
+    @FieldQL()
     result: boolean;
 
-    @Field({ nullable: true })
+    @FieldQL({ nullable: true })
     jwt: string;
 
-    @Field()
+    @FieldQL()
     message: string;
 
-    @Field()
+    @FieldQL()
     code: number;
 }

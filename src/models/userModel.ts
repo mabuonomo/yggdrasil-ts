@@ -1,43 +1,42 @@
 import "reflect-metadata";
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType as ObjectTypeQL, Field as FieldQL } from "type-graphql";
 import { compareSync } from "bcrypt";
-import { Column, Entity, ObjectIdColumn } from "typeorm";
+import { Column as ColumnORM, Entity, ObjectIdColumn } from "typeorm";
 import { ProfileModel } from "./profileModel";
 import { SocialModel } from "./socialModel";
 import { UserInterface } from "../interfaces/models/userInterface";
-import { isNullableType } from "graphql";
 
-@ObjectType()
+@ObjectTypeQL()
 @Entity()
 export class UserModel implements UserInterface {
 
-    @Field()
+    @FieldQL()
     @ObjectIdColumn()
     _id: string;
 
-    @Field({ nullable: true })
+    @FieldQL({ nullable: true })
     token: string;
 
-    @Field({ nullable: true })
+    @FieldQL({ nullable: true })
     result: boolean;
 
-    @Field({ nullable: true })
+    @FieldQL({ nullable: true })
     error: string;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     name: string;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     password: string;
 
-    @Field()
-    @Column(type => SocialModel)
+    @FieldQL()
+    @ColumnORM(type => SocialModel)
     social: SocialModel
 
-    @Field()
-    @Column(type => ProfileModel)
+    @FieldQL()
+    @ColumnORM(type => ProfileModel)
     profile: ProfileModel
 
     comparePassword = function (password) {

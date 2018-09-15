@@ -1,4 +1,3 @@
-
 export interface ProfileInterface {
 
     pic_url: String;

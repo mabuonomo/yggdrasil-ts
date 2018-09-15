@@ -1,29 +1,29 @@
 import "reflect-metadata";
-import { ObjectType, Field } from "type-graphql";
-import { Column } from "typeorm";
+import { ObjectType as ObjectTypeQL, Field as FieldQL } from "type-graphql";
+import { Column as ColumnORM } from "typeorm";
 import { ProfileInterface } from "../interfaces/models/profileInterface";
 
-@ObjectType()
+@ObjectTypeQL()
 export class ProfileModel implements ProfileInterface {
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     pic_url: String;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     birthday: Date;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     first_name: String;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     last_name: String;
 
-    @Field()
-    @Column()
+    @FieldQL()
+    @ColumnORM()
     email: String;
 
 }

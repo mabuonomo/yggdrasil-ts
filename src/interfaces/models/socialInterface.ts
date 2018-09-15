@@ -1,4 +1,3 @@
-
 export interface SocialInterface {
 
     id_facebook: String;

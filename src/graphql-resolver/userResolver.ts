@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Arg, Resolver, Query, Mutation, Ctx } from "type-graphql";
+import { Arg, Resolver, Query, Ctx } from "type-graphql";
 import { getManager } from "typeorm";
 import { UserModel } from "../models/userModel";
 

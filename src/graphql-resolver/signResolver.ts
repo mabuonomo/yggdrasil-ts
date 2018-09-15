@@ -8,7 +8,6 @@ import { UserModel } from "../models/userModel";
 import * as passport from 'passport';
 import { Request, NextFunction } from "express";
 import { LoginInput } from "../graphql-input/loginInput";
-import { Strategy as LocalStrategy } from 'passport-local';
 import { Response } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
 

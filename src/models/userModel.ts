@@ -1,14 +1,14 @@
 import "reflect-metadata";
 import { ObjectType as ObjectTypeQL, Field as FieldQL } from "type-graphql";
 import { compareSync } from "bcrypt";
-import { Column as ColumnORM, Entity, ObjectIdColumn } from "typeorm";
+import { Column as ColumnORM, Entity as EntityORM, ObjectIdColumn } from "typeorm";
 import { ProfileModel } from "./profileModel";
 import { SocialModel } from "./socialModel";
 import { UserInterface } from "../interfaces/models/userInterface";
 import { InfoModel } from "./inforModel";
 
 @ObjectTypeQL()
-@Entity()
+@EntityORM()
 export class UserModel implements UserInterface {
 
     @FieldQL()

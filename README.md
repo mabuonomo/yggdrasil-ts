@@ -105,6 +105,15 @@ Result:
 }
 ```
 
+## FAQ
+How I can test the endpoint /api?
+
+* If you use a browser you need a Header Modifier extension. 
+
+* In alternative you can use Postman (https://www.getpostman.com) or Insomnia (https://insomnia.rest). Insomnia supports natively graphql application (and GraphiQL explorer). 
+
+Finally set the header field: "Authorization Bearer _your_jwt_token_"
+
 ## Thanks to
 * NodeJS        https://nodejs.org
 * TypeGraphql   https://github.com/19majkel94/type-graphql

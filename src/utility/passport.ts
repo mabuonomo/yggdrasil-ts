@@ -18,7 +18,7 @@ export default class PassportCustom {
                 const manager = getManager(); // or connection.manager
 
                 var user = await manager.findOne(UserModel, { "profile.email": email })
-                if (!user.comparePassword(password)) {
+                if (!user || !user.comparePassword(password)) {
                     return cb(null, false, { message: 'Incorrect email or password.' });
                 }
 
@@ -42,28 +42,5 @@ export default class PassportCustom {
                 //     });
             }
         ));
-
-        /* app.post('/auth', function (req, res, next) {
-
-            passport.authenticate('local', { session: false }, (err, user, info) => {
-                if (err || !user) {
-                    return res.status(400).json({
-                        message: 'Err - Something is not right',
-                        err: err,
-                        user: user
-                    });
-                }
-
-                req.login(user, { session: false }, (err) => {
-                    if (err) {
-                        res.send(err);
-                    }
-                    // generate a signed son web token with the contents of user object and return it in the response
-                    const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret');
-                    return res.json({ user, token });
-                });
-
-            })(req, res, next);
-        }); */
     }
 }

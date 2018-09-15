@@ -5,6 +5,7 @@ import { Column, Entity, ObjectIdColumn } from "typeorm";
 import { ProfileModel } from "./profileModel";
 import { SocialModel } from "./socialModel";
 import { UserInterface } from "../interfaces/models/userInterface";
+import { isNullableType } from "graphql";
 
 @ObjectType()
 @Entity()
@@ -14,8 +15,14 @@ export class UserModel implements UserInterface {
     @ObjectIdColumn()
     _id: string;
 
-    @Field()
+    @Field({ nullable: true })
     token: string;
+
+    @Field({ nullable: true })
+    result: boolean;
+
+    @Field({ nullable: true })
+    error: string;
 
     @Field()
     @Column()

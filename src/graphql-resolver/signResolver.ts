@@ -25,20 +25,24 @@ export class SignResolver {
         req.body.password = loginInput.password;
 
         return await new Promise((resolve, reject) => {
-            passport.authenticate('local', { session: false }, async (err, user, info) => {
-
-                if (err) reject(err);
+            passport.authenticate('local', { session: false }, async (err, user: UserModel, info) => {
 
                 if (user) {
-                    user = new UserModel();
                     const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 7
                     user.token = token;
-                    resolve(user);
+                    user.result = true;
                 }
+
+                if (err || !user) {
+                    user = new UserModel();
+                    user.result = false;
+                    user.error = err;
+                }
+
+                resolve(user);
 
             })(req, res, next);
         });
-
     }
 
     @Mutation(returns => UserModel)

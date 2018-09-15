@@ -102,7 +102,7 @@ Result:
   }
 }
 ```
-
+---
 ## Thanks to
 * NodeJS        https://nodejs.org
 * TypeGraphql   https://github.com/19majkel94/type-graphql

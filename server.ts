@@ -1,18 +1,21 @@
 import * as express from "express";
-import mongoose = require('mongoose');
 import * as bodyParser from "body-parser";
 import * as logger from 'morgan';
 import { buildSchema } from "type-graphql";
+
+// graphql resolvers
 import { UserResolver } from "./src/graphql-resolver/userResolver";
+import { SignResolver } from "./src/graphql-resolver/signResolver";
+
 import * as graphqlHTTP from "express-graphql";
 import { createConnection } from "typeorm";
 import { UserModel } from "./src/models/userModel";
 import PassportCustom from './src/utility/passport';
-const ormconfig = require("./ormconfig.json");
 import * as passport from 'passport';
 
-var config = require('./config.json');
-var port = process.env.PORT || config.express_port;
+const config = require('./config.json');
+const port = process.env.PORT || config.express_port;
+const ormconfig = require("./ormconfig.json");
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -23,6 +26,7 @@ class App {
     //Run configuration methods on the Express instance.
     constructor() {
         this.express = express();
+
         this.middleware();
         this.initDatabase();
         this.setRouter();
@@ -32,7 +36,7 @@ class App {
         this.express.use(logger('dev'));
         this.express.use(bodyParser.json());
 
-        // questo fa funzionare passport.autenticate
+        // need to use passport.autenticate
         this.express.use(bodyParser.urlencoded({ extended: false }));
 
         this.express.use(bodyParser.text({ type: 'application/graphql' }));
@@ -61,7 +65,18 @@ class App {
 
     private async setRouter() {
 
-        const schema = await buildSchema({
+        const schemaSign = await buildSchema({
+            resolvers: [SignResolver]
+        });
+
+        this.express.use('/sign',
+            graphqlHTTP((req) => ({
+                schema: schemaSign,
+                graphiql: true,
+                context: req.user
+            })));
+
+        const schemaApi = await buildSchema({
             resolvers: [UserResolver]
         });
 
@@ -71,18 +86,9 @@ class App {
                     session: false
                 }),
             graphqlHTTP((req) => ({
-                schema: schema,
+                schema: schemaApi,
                 graphiql: true,
                 context: req.user
-            })));
-
-        // DEBUG ONLY
-        this.express.use('/graphql',
-            graphqlHTTP((req) => ({
-                schema: schema,
-                graphiql: true,
-                context: req.user,
-                req: req
             })));
     }
 }

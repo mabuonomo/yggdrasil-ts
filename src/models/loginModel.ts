@@ -1,10 +1,5 @@
 import "reflect-metadata";
-import { ObjectType, Field, InputType } from "type-graphql";
-import { compareSync, hashSync } from "bcrypt";
-import { Column, Entity, ObjectID, ObjectIdColumn, getManager } from "typeorm";
-import { ProfileModel } from "./profileModel";
-import { SocialModel } from "./socialModel";
-import { UserInterface } from "../interfaces/models/userInterface";
+import { ObjectType, Field } from "type-graphql";
 
 @ObjectType()
 export class LoginModel {

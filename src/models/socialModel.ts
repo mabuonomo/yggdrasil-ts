@@ -1,6 +1,6 @@
 import "reflect-metadata";
-import { ObjectType, Field, InputType } from "type-graphql";
-import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { ObjectType, Field } from "type-graphql";
+import { Column } from "typeorm";
 import { SocialInterface } from "../interfaces/models/socialInterface";
 
 @ObjectType()

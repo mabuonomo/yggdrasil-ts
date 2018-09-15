@@ -1,10 +1,10 @@
 import "reflect-metadata";
-import { ObjectType, Field, InputType } from "type-graphql";
-import {Column, Entity, ObjectID, ObjectIdColumn} from "typeorm";
+import { ObjectType, Field } from "type-graphql";
+import { Column } from "typeorm";
 import { ProfileInterface } from "../interfaces/models/profileInterface";
 
 @ObjectType()
-export class ProfileModel implements ProfileInterface{
+export class ProfileModel implements ProfileInterface {
 
     @Field()
     @Column()

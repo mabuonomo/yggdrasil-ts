@@ -30,12 +30,14 @@ export class SignResolver {
                     const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 7
                     user.token = token;
                     user.result = true;
+                    user.info = info;
                 }
 
                 if (err || !user) {
                     user = new UserModel();
                     user.result = false;
                     user.error = err;
+                    user.info = info;
                 }
 
                 resolve(user);

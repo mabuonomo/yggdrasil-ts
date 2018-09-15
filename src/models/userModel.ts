@@ -5,6 +5,7 @@ import { Column as ColumnORM, Entity, ObjectIdColumn } from "typeorm";
 import { ProfileModel } from "./profileModel";
 import { SocialModel } from "./socialModel";
 import { UserInterface } from "../interfaces/models/userInterface";
+import { InfoModel } from "./inforModel";
 
 @ObjectTypeQL()
 @Entity()
@@ -22,6 +23,9 @@ export class UserModel implements UserInterface {
 
     @FieldQL({ nullable: true })
     error: string;
+
+    @FieldQL({ nullable: true })
+    info: InfoModel;
 
     @FieldQL()
     @ColumnORM()

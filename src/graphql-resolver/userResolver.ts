@@ -20,6 +20,6 @@ export class UserResolver {
     async getByEmail(@Arg("email") email: string) {
         const manager = getManager();
 
-        return await manager.findOne(UserModel, { 'profile.email': email });
+        return await manager.findOne(UserModel, { profile: { email: email } });//{ 'profile.email': email });
     }
 }

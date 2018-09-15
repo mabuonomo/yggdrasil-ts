@@ -17,7 +17,7 @@ export default class PassportCustom {
 
                 const manager = getManager(); // or connection.manager
 
-                var user = await manager.findOne(UserModel, { "profile.email": email })
+                var user = await manager.findOne(UserModel, { profile: { email: email } }) // "profile.email": email })
                 if (!user || !user.comparePassword(password)) {
                     return cb(null, false, { message: 'Incorrect email or password.' });
                 }

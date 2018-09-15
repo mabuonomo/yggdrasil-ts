@@ -15,6 +15,9 @@ export class UserModel implements UserInterface {
     _id: string;
 
     @Field()
+    token: string;
+
+    @Field()
     @Column()
     name: string;
 

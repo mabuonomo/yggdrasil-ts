@@ -41,6 +41,7 @@ class App {
 
         this.express.use(bodyParser.text({ type: 'application/graphql' }));
         this.express.listen(port);
+
         PassportCustom.init(this.express);
     }
 
@@ -70,10 +71,12 @@ class App {
         });
 
         this.express.use('/sign',
-            graphqlHTTP((req) => ({
+            graphqlHTTP((req, res, next) => ({
                 schema: schemaSign,
                 graphiql: true,
-                context: req.user
+                req: req,
+                res: res,
+                next: next
             })));
 
         const schemaApi = await buildSchema({

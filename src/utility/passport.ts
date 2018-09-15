@@ -7,6 +7,7 @@ import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 
 export default class PassportCustom {
+
     public static init(app: express.Application) {
         app.use(passport.initialize());
         app.use(passport.session());
@@ -42,7 +43,7 @@ export default class PassportCustom {
             }
         ));
 
-        app.post('/auth', function (req, res, next) {
+        /* app.post('/auth', function (req, res, next) {
 
             passport.authenticate('local', { session: false }, (err, user, info) => {
                 if (err || !user) {
@@ -63,6 +64,6 @@ export default class PassportCustom {
                 });
 
             })(req, res, next);
-        });
+        }); */
     }
 }

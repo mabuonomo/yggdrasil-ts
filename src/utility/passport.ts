@@ -4,6 +4,7 @@ import { UserModel } from '../models/userModel';
 import { Strategy as JWTStrategy, ExtractJwt as ExtractJWT, StrategyOptions } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import * as express from 'express';
+import { Constants } from './global';
 
 export default class PassportCustom {
 
@@ -14,14 +15,14 @@ export default class PassportCustom {
         passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' },
             async function (email: String, password: String, cb) {
 
-                const manager = getManager(); // or connection.manager
+                const manager = getManager();
 
                 var user = await manager.findOne(UserModel, { profile: { email: email } }) // "profile.email": email })
                 if (!user || !user.comparePassword(password)) {
-                    return cb(null, false, { message: 'Incorrect email or password.' });
+                    return cb(null, false, { message: Constants.login_fail_text });
                 }
 
-                return cb(null, user, { message: 'Logged In Successfully' });
+                return cb(null, user, { message: Constants.login_ok_text });
             }
         ));
 
@@ -31,7 +32,7 @@ export default class PassportCustom {
                 return cb(null, jwtPayload);
 
                 //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-                // const manager = getManager(); // or connection.manager
+                // const manager = getManager();
                 // return manager.findOne(UserModel, { _id: jwtPayload._id })// UserRepository.findById(jwtPayload._id)
                 //     .then(user => {
                 //         return cb(null, user);

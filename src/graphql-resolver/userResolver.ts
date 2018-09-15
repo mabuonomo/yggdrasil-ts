@@ -21,6 +21,6 @@ export class UserResolver {
     @Query(returns => UserModel)
     async getByEmail(@Arg("email") email: string) {
 
-        return await this.manager.findOne(UserModel, { profile: { email: email } });//{ 'profile.email': email });
+        return await this.manager.findOne(UserModel, { profile: { email: email } });
     }
 }

@@ -1,79 +1,104 @@
 ## YGGDRASIL
-
-<div align="center">
-  <a href="#">
-    <img src="https://github.com/mabuonomo/yggdrasil/raw/master/resources/logo.jpg" height="228">
-  </a>
-  <br>
-  <br>
-</div>
-
-[![dependencies Status](https://david-dm.org/mabuonomo/yggdrasil/status.svg)](https://david-dm.org/mabuonomo/yggdrasil)
-
 A prototype of a nodejs server, written in Typescript, with JWT authentication, GraphQL and TypeORM
 
-## Run
-First compile the ts files.
+## Prerequisites
+* MongoDB
+* NPM 6.2+
+* NodeJs 10.9+
 
-After execute server
+### First
+* Compile the ts files.
+* Copy ormconfig.json and config.json into dist folder
+
+### Run
 ```bash
 npm start run
 ```
 
-## Testing
-### GraphQL without JWT authentication
-To simulate GraphQL via browser (without JWT authentication) navigate to 
-```bash
-http://localhost:3000/graphl
-```
+## Endpoints
 
-Create an user:
+There are two endpoints, /sign and /api.
+
+### Registration and Login (without JWT token)
+The first, without JWT check validation, allow you to make a registration and a login
+```
+http://localhost:3000/sign
+```
 ```graphql
-mutation add($newUser: UserInput!) {
-  insert(newUser: $newUser) {
-    name
-    _id
-    password
-    profile {
-      email
+query login($loginInput: LoginInput!) {
+  signIn(loginInput: $loginInput) {
+    result,
+    token,
+    error,
+    info {
+      message
     }
   }
 }
 
+mutation register($newUser: UserInput!) {
+  signUp(newUser: $newUser) {
+    name
+  }
+}
+
+Query variables:
 {
+  "loginInput": {
+    "email": "email@email.it",
+    "password": "password"
+  },
   "newUser": {
-    "name": "Mario",
+    "name": "user",
     "profile": {
       "email": "email@email.it"
     },
     "password": "password"
   }
 }
+
+Result Login:
+{
+  "data": {
+    "signIn": {
+      "result": true,
+      "token": "******",
+      "error": null,
+      "info": {
+        "message": "Logged In Successfully"
+      }
+    }
+  }
+}
 ```
 
-### Login (get JWT token):
-You can use Insomnia or Postman
-```
-Endpoint 
-/auth
-```
-```
-Body
-email: email@email.it
-password: password
-```
+### API (need a JWT token)
+The second endpoint need a JWT token that you can to get from login query.
 
-### GraphQL with JWT authentication
-To simulate GraphQL with JWT authentication you can use Insomnia (https://insomnia.rest/)
 ```
-Endpoint
 http://localhost:3000/api
 ```
 
-```
-Header
-Authorization Bearer YOUR_JWT_TOKEN
+```graphql
+query getByEmail($email: String!) {
+  getByEmail(email: $email) {
+    name
+  }
+}
 
+Query variables:
+{
+  "email": "email@email.it"
+}
+
+Result:
+{
+  "data": {
+    "getByEmail": {
+      "name": "user"
+    }
+  }
+}
 ```
 
 ## Thanks to

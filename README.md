@@ -4,7 +4,7 @@ A prototype of a nodejs server, written in Typescript, with JWT authentication, 
 ## Prerequisites
 * MongoDB
 * NPM 6.2+
-* NodeJs 10.9+
+* NodeJS 10.9+
 
 ### First
 * Compile the ts files.
@@ -41,7 +41,8 @@ mutation register($newUser: UserInput!) {
     name
   }
 }
-
+```
+```json
 Query variables:
 {
   "loginInput": {
@@ -85,7 +86,8 @@ query getByEmail($email: String!) {
     name
   }
 }
-
+```
+```json
 Query variables:
 {
   "email": "email@email.it"

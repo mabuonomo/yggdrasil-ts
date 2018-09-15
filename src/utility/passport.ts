@@ -4,7 +4,6 @@ import { UserModel } from '../models/userModel';
 import { Strategy as JWTStrategy, ExtractJwt as ExtractJWT, StrategyOptions } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import * as express from 'express';
-import * as jwt from 'jsonwebtoken';
 
 export default class PassportCustom {
 

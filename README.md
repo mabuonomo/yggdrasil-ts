@@ -57,7 +57,8 @@ Query variables:
     "password": "password"
   }
 }
-
+```
+```json
 Result Login:
 {
   "data": {
@@ -92,7 +93,8 @@ Query variables:
 {
   "email": "email@email.it"
 }
-
+```
+```json
 Result:
 {
   "data": {
@@ -108,3 +110,4 @@ Result:
 * TypeGraphql   https://github.com/19majkel94/type-graphql
 * TypeOrm       https://github.com/typeorm/typeorm
 * JWT           https://jwt.io/
+* GraphQL       http://graphql.github.io/

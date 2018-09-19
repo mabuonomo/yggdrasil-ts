@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha tests/**.ts",
     "start": "nodemon dist/server.js"
   },
   "repository": {
@@ -15,7 +15,12 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/mario_buonomo/code_arena#readme",
   "devDependencies": {
-    "nodemon": "^1.17.2"
+    "@types/chai": "^4.1.5",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.17.2",
+    "ts-node": "^7.0.1"
   },
   "dependencies": {
     "@types/bcrypt": "^2.0.0",

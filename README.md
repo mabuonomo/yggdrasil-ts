@@ -15,6 +15,11 @@ A prototype of a nodejs server, written in Typescript, with JWT authentication, 
 npm start run
 ```
 
+### Run tests
+```bash
+npm test
+```
+
 ## Endpoints
 
 There are two endpoints, /sign and /api.

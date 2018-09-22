@@ -1,0 +1,114 @@
+-'use strict';
+-
+-var mongoose = require('mongoose'),
+-    User = mongoose.model('User'),
+-    config = require('../../config.json'),
+-    controllerUser = require("./controllerUser");
+-
+-var crypto = require('crypto');
+-var base64url = require('base64url');
+-
+-const { google } = require('googleapis');
+-var plus = google.plus('v1');
+-
+-// GoogleApis = require('googleapis');
+-// Place = mongoose.model('Place');
+-
+-// var OAuth2 = google.auth.OAuth2;
+-// const google = new GoogleApis();
+-var OAuth2 = google.auth.OAuth2;
+-
+-var OAuth2 = google.auth.OAuth2;
+-var oauth2Client = new OAuth2(
+-    config.google_client_id,
+-    config.google_client_secret
+-);
+-
+-var scopes = [
+-    'https://www.googleapis.com/auth/plus.login',
+-    'https://www.googleapis.com/auth/plus.me',
+-    'https://www.googleapis.com/auth/userinfo.email',
+-    'https://www.googleapis.com/auth/userinfo.profile',
+-    'email'
+-];
+-
+-//get di tutti i places di una determinata area
+-exports.getUser = function (req, res) {
+-
+-    // Retrieve tokens via token exchange explained above or set them:
+-    var tokens = { access_token: req.body.access_token, refresh_token: req.body.refresh_token };
+-    // console.log(tokens);
+-    oauth2Client.setCredentials(tokens);
+-
+-    plus.people.get({
+-        userId: 'me', //'me',
+-        auth: oauth2Client,
+-        scope: scopes
+-    }, function (err, response) {
+-        // handle err and response
+-        console.log(response.data);
+-
+-        var user_google = response.data;
+-
+-        // // cerco se l'utente esiste già
+-        User.findOne({
+-            'profile.email': user_google.emails[0].value //.email //req.body.email
+-        }, function (err, user) {
+-            if (err) throw err;
+-            if (!user) {
+-                //user non esiste, devo crearlo
+-
+-                console.log(user_google);
+-
+-                var newUser = new User();
+-                newUser.social.id_google = user_google.id;
+-                newUser.password = base64url(crypto.randomBytes(20));
+-                newUser.hash_password = base64url(crypto.randomBytes(20));
+-                newUser.profile = {
+-                    email: user_google.emails[0].value,
+-                    first_name: user_google.name.givenName, //.first_name,
+-                    last_name: user_google.name.familyName, //.last_name
+-                    pic_url: user_google.image.url
+-                };
+-
+-                console.log(newUser);
+-                console.log("\n");
+-
+-                newUser.save(function (err, user_saved) {
+-                    if (err) {
+-                        // return res.status(400).send({
+-                        //     message: err
+-                        // });
+-                        console.log(err);
+-
+-                    } else {
+-                        // user.hash_password = undefined;
+-                        // return res.json(user);
+-                        console.log(user_saved);
+-                        controllerUser.login(user_saved.profile.email, '', true, res);
+-                    }
+-                });
+-
+-            } else if (user) {
+-                //utente esiste, lo devo aggiornare
+-                user.social.id_facebook = user_google.id;
+-                user.profile = {
+-                    email: user_google.emails[0].value,
+-                    first_name: user_google.name.givenName, //.first_name,
+-                    last_name: user_google.name.familyName, //.last_name
+-                    pic_url: user_google.image.url
+-                };
+-
+-                // aggiorno
+-                User.findOneAndUpdate({ _id: user._id }, user, { new: true }, function (err, user_updated) {
+-
+-                    console.log(user_updated);
+-                    controllerUser.login(user_updated.profile.email, '', true, res);
+-
+-                });
+-            }
+-        });
+-
+-    });
+-
+-};

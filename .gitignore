@@ -5,3 +5,4 @@ dist/
 .vscode/temp.sql
 .tmp/
 npm-debug.log
+config.json

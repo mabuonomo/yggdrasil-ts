@@ -37,6 +37,8 @@ export class FBResolver {
             var fb = graph.get(this.me_field, function (err, user_fb) {
                 console.log(user_fb);
                 console.log(err);
+
+                // if(user_fb){}
             });
         });
         // console.log(fb);

@@ -2,8 +2,9 @@ import "reflect-metadata";
 import { getManager, EntityManager } from "typeorm";
 import { UserModel } from "../models/userModel";
 import * as jwt from 'jsonwebtoken';
+import { ControllerInteface } from "../interfaces/controller/controllerInterface";
 
-export class UserController {
+export class UserController implements ControllerInteface {
 
     manager: EntityManager;
     constructor() {

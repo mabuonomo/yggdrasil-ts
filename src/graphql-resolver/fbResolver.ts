@@ -1,20 +1,8 @@
 import "reflect-metadata";
 import { Arg, Resolver, Query, Mutation, Ctx } from "type-graphql";
-import { UserInput } from "../graphql-input/userInput";
-import { deserialize } from "class-transformer";
-import { hashSync } from "bcrypt";
-import { getManager, EntityManager } from "typeorm";
 import { UserModel } from "../models/userModel";
-import * as passport from 'passport';
-import { Request, NextFunction } from "express";
-import { LoginInput } from "../graphql-input/loginInput";
-import { Response } from "express-serve-static-core";
-import * as jwt from 'jsonwebtoken';
 import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
-import { Constants } from "../utility/global";
-import { InfoModel } from "../models/inforModel";
-import { ProfileModel } from "../models/profileModel";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
 
 const config = require('../../config.json');
@@ -23,11 +11,9 @@ const config = require('../../config.json');
 export class FBResolver {
 
     me_field = config.facebook_fields;
-    manager: EntityManager;
     userController: UserController;
 
     constructor() {
-        this.manager = getManager();
         this.userController = new UserController();
     }
 
@@ -44,22 +30,10 @@ export class FBResolver {
                 if (err || !user_fb) {
                     user.result = false;
                     user.error = err;
+                    resolve(user);
                 }
 
-                if (user_fb) {
-                    if (user_fb.email === undefined) {
-                        user.result = false;
-                        user.error = err;
-                        user.info = new InfoModel();
-                        user.info.message = Constants.social_email_missing;
-                    } else {
-                        user = await (new UserController()).getByEmail(user_fb.email);
-                        user.result = true;
-                        user.social.id_facebook = user_fb.id;
-                        user.profile.first_name = user_fb.first_name;
-                        user.profile.last_name = user_fb.last_name;
-                    }
-                }
+                user = await (new UserController()).socialCheckUser(user_fb);
 
                 resolve(user);
             });

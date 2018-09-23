@@ -3,22 +3,19 @@ import { Arg, Resolver, Query, Mutation, Ctx } from "type-graphql";
 import { UserInput } from "../graphql-input/userInput";
 import { deserialize } from "class-transformer";
 import { hashSync } from "bcrypt";
-import { getManager, EntityManager } from "typeorm";
 import { UserModel } from "../models/userModel";
 import * as passport from 'passport';
 import { Request, NextFunction } from "express";
 import { LoginInput } from "../graphql-input/loginInput";
 import { Response } from "express-serve-static-core";
-import * as jwt from 'jsonwebtoken';
 import { UserController } from "../controller/userController";
+import { InfoModel } from "../models/inforModel";
 
 @Resolver(UserModel)
 export class SignResolver {
 
-    manager: EntityManager;
     userController: UserController;
     constructor() {
-        this.manager = getManager();
         this.userController = new UserController();
     }
 
@@ -29,24 +26,9 @@ export class SignResolver {
         req.body.password = loginInput.password;
 
         return await new Promise((resolve, reject) => {
-            passport.authenticate('local', { session: false }, async (err, user: UserModel, info) => {
-
-                if (user) {
-                    const token = this.userController.createJwtToken(user);
-                    user.token = token;
-                    user.result = true;
-                    user.info = info;
-                }
-
-                if (err || !user) {
-                    user = new UserModel();
-                    user.result = false;
-                    user.error = err;
-                    user.info = info;
-                }
-
-                resolve(user);
-
+            passport.authenticate('local', { session: false }, async (err, user: UserModel, info: InfoModel) => {
+                
+                resolve(this.userController.userAuth(user, err, info));
             })(req, res, next);
         });
     }
@@ -58,7 +40,7 @@ export class SignResolver {
         var user = deserialize(UserModel, json);
         user.password = hashSync(newUser.password, 10);
 
-        var user = await this.manager.save(user);
+        var user = await this.userController.save(user);
         return user;
     }
 }

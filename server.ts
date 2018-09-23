@@ -6,6 +6,7 @@ import { buildSchema } from "type-graphql";
 // graphql resolvers
 import { UserResolver } from "./src/graphql-resolver/userResolver";
 import { SignResolver } from "./src/graphql-resolver/signResolver";
+import { FBResolver } from "./src/graphql-resolver/fbResolver";
 
 import * as graphqlHTTP from "express-graphql";
 import { createConnection } from "typeorm";
@@ -67,7 +68,7 @@ class App {
     private async setRouter() {
 
         const schemaSign = await buildSchema({
-            resolvers: [SignResolver]
+            resolvers: [SignResolver, FBResolver]
         });
 
         this.express.use('/sign',

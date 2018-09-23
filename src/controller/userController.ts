@@ -72,10 +72,16 @@ export class UserController implements ControllerInteface {
         } else {
             user = await this.getByEmail(profile.email);
             user.result = true;
-            user.social.id_facebook = profile.id;
-            user.profile.first_name = profile.first_name;
-            user.profile.last_name = profile.last_name;
+            user = this.fillSocialUser(user, profile);
         }
+
+        return user;
+    }
+
+    private fillSocialUser(user: UserModel, profile: ProfileSocialInterface): UserModel {
+        user.social.id_facebook = profile.id;
+        user.profile.first_name = profile.first_name;
+        user.profile.last_name = profile.last_name;
 
         return user;
     }

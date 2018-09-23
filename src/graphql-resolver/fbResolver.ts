@@ -11,6 +11,7 @@ import { LoginInput } from "../graphql-input/loginInput";
 import { Response } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
 import * as graph from 'fbgraph';
+import { UserController } from "../controller/userController";
 
 const config = require('../../config.json');
 
@@ -19,8 +20,11 @@ export class FBResolver {
 
     me_field = config.facebook_fields;
     manager: EntityManager;
+    userController: UserController;
+    
     constructor() {
         this.manager = getManager();
+        this.userController = new UserController();
     }
 
     @Query(returns => UserModel)
@@ -29,9 +33,11 @@ export class FBResolver {
 
         graph.setAccessToken(access_token);
 
-        var fb = await graph.get(this.me_field, function (err, user_fb) {
-            console.log(user_fb);
-            console.log(err);
+        return await new Promise((resolve, reject) => {
+            var fb = graph.get(this.me_field, function (err, user_fb) {
+                console.log(user_fb);
+                console.log(err);
+            });
         });
         // console.log(fb);
         // console.log(fb.err);

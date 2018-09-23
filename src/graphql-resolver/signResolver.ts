@@ -10,13 +10,16 @@ import { Request, NextFunction } from "express";
 import { LoginInput } from "../graphql-input/loginInput";
 import { Response } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
+import { UserController } from "../controller/userController";
 
 @Resolver(UserModel)
 export class SignResolver {
 
     manager: EntityManager;
+    userController: UserController;
     constructor() {
         this.manager = getManager();
+        this.userController = new UserController();
     }
 
     @Query(returns => UserModel)
@@ -29,7 +32,8 @@ export class SignResolver {
             passport.authenticate('local', { session: false }, async (err, user: UserModel, info) => {
 
                 if (user) {
-                    const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 7
+                    // const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 
+                    const token = this.userController.createJwtToken(user);
                     user.token = token;
                     user.result = true;
                     user.info = info;

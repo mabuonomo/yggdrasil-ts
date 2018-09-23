@@ -6,6 +6,8 @@ import { ControllerInteface } from "../interfaces/controller/controllerInterface
 import { InfoModel } from "../models/inforModel";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
 import { Constants } from "../utility/global";
+import { ProfileModel } from "../models/profileModel";
+import { SocialModel } from "../models/socialModel";
 
 export class UserController implements ControllerInteface {
 
@@ -43,7 +45,7 @@ export class UserController implements ControllerInteface {
 
     public userAuth(user: UserModel, err, info: InfoModel) {
         if (user === undefined) {
-            user = new UserModel();
+            user = this._createNewUserModel();
             user.result = false;
             user.error = err;
             user.info = info;
@@ -64,21 +66,45 @@ export class UserController implements ControllerInteface {
             return null;
         }
 
-        var user = new UserModel();
         if (profile.email === undefined) {
+            var user = this._createNewUserModel();
             user.result = false;
             user.info = new InfoModel();
             user.info.message = Constants.social_email_missing;
-        } else {
-            user = await this.getByEmail(profile.email);
-            user.result = true;
-            user = this.fillSocialUser(user, profile);
+
+            return user;
         }
+
+        var user = await this.getByEmail(profile.email);
+        if (user === undefined) {
+            user = this._createNewUserModel();
+        }
+        user.result = true;
+        user = this._fillSocialUser(user, profile);
+
+        await this.save(user);
 
         return user;
     }
 
-    private fillSocialUser(user: UserModel, profile: ProfileSocialInterface): UserModel {
+    private _createNewUserModel() {
+        var user = new UserModel();
+        user.profile = new ProfileModel();
+        user.social = new SocialModel();
+
+        return user;
+    }
+
+    private _fillSocialUser(user: UserModel, profile: ProfileSocialInterface): UserModel {
+
+        if (user.social === undefined) {
+            user.social = new SocialModel();
+        }
+
+        if (user.profile === undefined) {
+            user.profile = new ProfileModel();
+        }
+
         user.social.id_facebook = profile.id;
         user.profile.first_name = profile.first_name;
         user.profile.last_name = profile.last_name;

@@ -30,12 +30,12 @@ export class FBResolver {
                 if (err || !user_fb) {
                     user.result = false;
                     user.error = err;
+
                     resolve(user);
                 }
-
                 user = await (new UserController()).socialCheckUser(user_fb);
+                resolve((new UserController()).userAuth(user, err, null));
 
-                resolve(user);
             });
         });
     }

@@ -14,6 +14,8 @@ import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
 import { Constants } from "../utility/global";
 import { InfoModel } from "../models/inforModel";
+import { ProfileModel } from "../models/profileModel";
+import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
 
 const config = require('../../config.json');
 
@@ -36,9 +38,7 @@ export class FBResolver {
         graph.setAccessToken(access_token);
 
         return await new Promise((resolve, reject) => {
-            var fb = graph.get(this.me_field, async function (err, user_fb) {
-                console.log(user_fb);
-                console.log(err);
+            var fb = graph.get(this.me_field, async function (err, user_fb: ProfileSocialInterface) {
 
                 var user = new UserModel();
                 if (err || !user_fb) {

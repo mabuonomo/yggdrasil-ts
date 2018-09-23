@@ -1,10 +1,9 @@
 import * as passport from 'passport';
-import { getManager } from "typeorm";
-import { UserModel } from '../models/userModel';
 import { Strategy as JWTStrategy, ExtractJwt as ExtractJWT, StrategyOptions } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import * as express from 'express';
 import { Constants } from './global';
+import { UserController } from '../controller/userController';
 
 export default class PassportCustom {
 
@@ -12,12 +11,12 @@ export default class PassportCustom {
         app.use(passport.initialize());
         app.use(passport.session());
 
+        var userController: UserController = new UserController();
+
         passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' },
             async function (email: String, password: String, cb) {
 
-                const manager = getManager();
-
-                var user = await manager.findOne(UserModel, { profile: { email: email } }) // "profile.email": email })
+                var user = await userController.getByEmail(email);
                 if (!user || !user.comparePassword(password)) {
                     return cb(null, false, { message: Constants.login_fail_text });
                 }

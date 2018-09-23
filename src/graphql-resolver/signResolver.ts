@@ -32,7 +32,6 @@ export class SignResolver {
             passport.authenticate('local', { session: false }, async (err, user: UserModel, info) => {
 
                 if (user) {
-                    // const token = jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 
                     const token = this.userController.createJwtToken(user);
                     user.token = token;
                     user.result = true;

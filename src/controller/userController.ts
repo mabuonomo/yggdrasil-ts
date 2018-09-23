@@ -10,7 +10,7 @@ export class UserController {
         this.manager = getManager();
     }
 
-    public async getByEmail(email: string) {
+    public async getByEmail(email: String) {
         var user = await this.manager.findOne(UserModel, { profile: { email: email } })
         if (!user) {
             return null;

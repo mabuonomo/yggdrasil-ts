@@ -12,6 +12,8 @@ import { Response } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
 import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
+import { Constants } from "../utility/global";
+import { InfoModel } from "../models/inforModel";
 
 const config = require('../../config.json');
 
@@ -21,7 +23,7 @@ export class FBResolver {
     me_field = config.facebook_fields;
     manager: EntityManager;
     userController: UserController;
-    
+
     constructor() {
         this.manager = getManager();
         this.userController = new UserController();
@@ -34,20 +36,34 @@ export class FBResolver {
         graph.setAccessToken(access_token);
 
         return await new Promise((resolve, reject) => {
-            var fb = graph.get(this.me_field, function (err, user_fb) {
+            var fb = graph.get(this.me_field, async function (err, user_fb) {
                 console.log(user_fb);
                 console.log(err);
 
-                // if(user_fb){}
+                var user = new UserModel();
+                if (err || !user_fb) {
+                    user.result = false;
+                    user.error = err;
+                }
+
+                if (user_fb) {
+                    if (user_fb.email === undefined) {
+                        user.result = false;
+                        user.error = err;
+                        user.info = new InfoModel();
+                        user.info.message = Constants.social_email_missing;
+                    } else {
+                        user = await (new UserController()).getByEmail(user_fb.email);
+                        user.result = true;
+                        user.social.id_facebook = user_fb.id;
+                        user.profile.first_name = user_fb.first_name;
+                        user.profile.last_name = user_fb.last_name;
+                    }
+                }
+
+                resolve(user);
             });
         });
-        // console.log(fb);
-        // console.log(fb.err);
-
-        console.log("out");
-        var user = new UserModel();
-        user.name = 'sdasds';
-        return user;
     }
 
 

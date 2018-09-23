@@ -26,10 +26,11 @@ class App {
 
     //Run configuration methods on the Express instance.
     constructor() {
+        this.initDatabase();
+
         this.express = express();
 
         this.middleware();
-        this.initDatabase();
         this.setRouter();
     }
 

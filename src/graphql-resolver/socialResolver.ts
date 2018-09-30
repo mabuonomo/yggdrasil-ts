@@ -5,6 +5,8 @@ import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
 import * as google from 'googleapis';
+import { OAuth2Client } from "google-auth-library";
+import { Credentials } from "google-auth-library/build/src/auth/credentials";
 
 const config = require('../../config.json');
 
@@ -12,16 +14,19 @@ const config = require('../../config.json');
 export class SocialResolver {
 
     userController: UserController;
-    oath2Client: google.oauth2_v2.Oauth2;
+    oath2Client: OAuth2Client;
     plus: google.plus_v1.Plus;
     constructor() {
         this.userController = new UserController();
 
-        this.oath2Client = new google.oauth2_v2.Oauth2(
+        this.oath2Client = new OAuth2Client(
             config.google_client_id,
             config.google_client_secret
         );
-        this.plus = new google.plus_v1.Plus;
+
+        this.plus = new google.plus_v1.Plus({
+            auth: config.google_client_id
+        });
     }
 
     @Query(returns => UserModel)
@@ -51,8 +56,9 @@ export class SocialResolver {
     async google(@Arg("access_token") access_token: String, @Arg("refresh_token") refresh_token: String) {
         var access_token = access_token;
 
-        var tokens = { access_token: access_token, refresh_token: refresh_token };
-        this.oath2Client.setCredentials(tokens);
+        var credentials: Credentials = { access_token: access_token, refresh_token: refresh_token };
+        this.oath2Client.setCredentials(credentials);
+
         return await new Promise((resolve, reject) => {
 
         });

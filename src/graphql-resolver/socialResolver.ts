@@ -43,8 +43,9 @@ export class SocialResolver {
                     resolve(user);
                 }
                 user = await (new UserController()).socialCheckUser(user_fb);
-                resolve((new UserController()).userAuth(user, err, null));
 
+                // success, create jwt token
+                resolve((new UserController()).userAuth(user, err, null));
             });
         });
     }

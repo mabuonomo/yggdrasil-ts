@@ -8,6 +8,7 @@ import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterf
 import { Constants } from "../utility/global";
 import { ProfileModel } from "../models/profileModel";
 import { SocialModel } from "../models/socialModel";
+import { throws } from "assert";
 
 export class UserController implements ControllerInteface {
 
@@ -79,6 +80,7 @@ export class UserController implements ControllerInteface {
         if (user === undefined) {
             user = this._createNewUserModel();
         }
+
         user.result = true;
         user = this._fillSocialUser(user, profile);
 

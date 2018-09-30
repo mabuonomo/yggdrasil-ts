@@ -7,6 +7,7 @@ import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterf
 import * as google from 'googleapis';
 import { OAuth2Client } from "google-auth-library";
 import { Credentials } from "google-auth-library/build/src/auth/credentials";
+import { CredentialsModel } from "../models/credentialsModel";
 
 const config = require('../../config.json');
 
@@ -53,15 +54,15 @@ export class SocialResolver {
     }
 
     @Query(returns => UserModel)
-    async google(@Arg("access_token") access_token: String, @Arg("refresh_token") refresh_token: String) {
+    async google(@Arg("access_token") access_token: string, @Arg("refresh_token") refresh_token: string) {
         var access_token = access_token;
 
-        var credentials: Credentials = { access_token: access_token, refresh_token: refresh_token };
+        var credentials: CredentialsModel = new CredentialsModel(access_token, refresh_token);
         this.oath2Client.setCredentials(credentials);
 
         return await new Promise((resolve, reject) => {
 
         });
-    });
-}
+    };
+
 }

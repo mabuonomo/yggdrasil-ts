@@ -4,30 +4,32 @@ import { UserModel } from "../models/userModel";
 import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
-import * as google from 'googleapis';
 import { OAuth2Client } from "google-auth-library";
-import { Credentials } from "google-auth-library/build/src/auth/credentials";
-import { CredentialsModel } from "../models/credentialsModel";
 
+const { google } = require('googleapis');
 const config = require('../../config.json');
 
 @Resolver(UserModel)
 export class SocialResolver {
 
     userController: UserController;
-    oath2Client: OAuth2Client;
-    plus: google.plus_v1.Plus;
+    oauth2Client: OAuth2Client;
+    plus;
     constructor() {
         this.userController = new UserController();
 
-        this.oath2Client = new OAuth2Client(
+        // this.oath2Client = new OAuth2Client(
+        //     config.google_client_id,
+        //     config.google_client_secret
+        // );
+
+        var OAuth2 = google.auth.OAuth2;
+        this.oauth2Client = new OAuth2(
             config.google_client_id,
             config.google_client_secret
         );
 
-        this.plus = new google.plus_v1.Plus({
-            auth: config.google_client_id
-        });
+        this.plus = google.plus('v1');
     }
 
     @Query(returns => UserModel)
@@ -57,10 +59,16 @@ export class SocialResolver {
     async google(@Arg("access_token") access_token: string, @Arg("refresh_token") refresh_token: string) {
         var access_token = access_token;
 
-        var credentials: CredentialsModel = new CredentialsModel(access_token, refresh_token);
-        this.oath2Client.setCredentials(credentials);
+        var credentials = { access_token: access_token, refresh_token: refresh_token };
+        this.oauth2Client.setCredentials(credentials);
 
-        return await new Promise((resolve, reject) => {
+        return await new Promise(async (resolve, reject) => {
+
+            var user = await this.plus.people.get({
+                userId: 'me',
+                auth: this.oauth2Client,
+                scope: config.scopes
+            });
 
         });
     };

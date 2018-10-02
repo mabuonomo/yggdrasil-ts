@@ -16,7 +16,6 @@ import * as passport from 'passport';
 
 const config = require('./config.json');
 const port = process.env.PORT || config.express_port;
-const ormconfig = require("./ormconfig.json");
 
 // Creates and configures an ExpressJS web server.
 class App {
@@ -50,12 +49,12 @@ class App {
     private initDatabase() {
 
         createConnection({
-            type: ormconfig.type,
-            host: ormconfig.host,
-            port: ormconfig.port,
-            username: ormconfig.username,
-            password: ormconfig.password,
-            database: ormconfig.database,
+            type: config.ormconfig.type,
+            host: config.ormconfig.host,
+            port: config.ormconfig.port,
+            username: config.ormconfig.username,
+            password: config.ormconfig.password,
+            database: config.ormconfig.database,
             entities: [
                 UserModel
             ],

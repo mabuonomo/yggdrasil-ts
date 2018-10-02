@@ -9,41 +9,53 @@ import { Constants } from "../utility/global";
 import { ProfileModel } from "../models/profileModel";
 import { SocialModel } from "../models/socialModel";
 import { throws } from "assert";
+import { UserRepository } from "../repository/userRepository";
 
 export class UserController implements ControllerInteface {
 
-    manager: EntityManager;
+    userRepository: UserRepository;
     constructor() {
-        this.manager = getManager();
+        this.userRepository = new UserRepository();
     }
 
+    /**
+     * 
+     * @param user 
+     */
     public async save(user: UserModel) {
-        return await this.manager.save(user);
+        return await this.userRepository.save(user);
     }
 
+    /**
+     * 
+     * @param email 
+     */
     public async getByEmail(email: String) {
-        var user = await this.manager.findOne(UserModel, { profile: { email: email } })
-        if (!user) {
-            return null;
-        }
-
-        return user;
+        return await this.userRepository.getByEmail(email);
     }
 
+    /**
+     * 
+     * @param id 
+     */
     public async getById(id: string) {
-        var user: UserModel = await this.manager.findOne(UserModel, id);
-        if (!user) {
-            return null;
-        }
-
-        return user;
+        return await this.userRepository.getById(id);
     }
 
+    /**
+     * 
+     * @param user 
+     */
     public createJwtToken(user: UserModel) {
-
         return jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 7
     }
 
+    /**
+     * 
+     * @param user 
+     * @param err 
+     * @param info 
+     */
     public userAuth(user: UserModel, err, info: InfoModel) {
         if (user === undefined) {
             user = this._createNewUserModel();
@@ -62,6 +74,10 @@ export class UserController implements ControllerInteface {
         return user;
     }
 
+    /**
+     * 
+     * @param profile 
+     */
     public async socialCheckUser(profile: ProfileSocialInterface): Promise<UserModel> {
         if (profile === undefined) {
             return null;
@@ -89,6 +105,9 @@ export class UserController implements ControllerInteface {
         return user;
     }
 
+    /**
+     * 
+     */
     private _createNewUserModel() {
         var user = new UserModel();
         user.profile = new ProfileModel();
@@ -97,6 +116,11 @@ export class UserController implements ControllerInteface {
         return user;
     }
 
+    /**
+     * 
+     * @param user 
+     * @param profile 
+     */
     private _fillSocialUser(user: UserModel, profile: ProfileSocialInterface): UserModel {
 
         if (user.social === undefined) {

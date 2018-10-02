@@ -4,6 +4,7 @@ import { UserModel } from "../models/userModel";
 import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
+import { SignController } from "../controller/signController";
 
 const config = require('../../config.json');
 
@@ -11,8 +12,10 @@ const config = require('../../config.json');
 export class SocialResolver {
 
     userController: UserController;
+    signController: SignController;
     constructor() {
         this.userController = new UserController();
+        this.signController = new SignController();
     }
 
     @Query(returns => UserModel)
@@ -31,10 +34,10 @@ export class SocialResolver {
 
                     resolve(user);
                 }
-                user = await (new UserController()).socialCheckUser(user_fb);
+                user = await (new SignController()).socialCheckUser(user_fb);
 
                 // success, create jwt token
-                resolve((new UserController()).userAuth(user, err, null));
+                resolve((new SignController()).userAuth(user, err, null));
             });
         });
     }

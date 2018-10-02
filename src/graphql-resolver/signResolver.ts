@@ -10,13 +10,16 @@ import { LoginInput } from "../graphql-input/loginInput";
 import { Response } from "express-serve-static-core";
 import { UserController } from "../controller/userController";
 import { InfoModel } from "../models/inforModel";
+import { SignController } from "../controller/signController";
 
 @Resolver(UserModel)
 export class SignResolver {
 
     userController: UserController;
+    signController: SignController;
     constructor() {
         this.userController = new UserController();
+        this.signController = new SignController();
     }
 
     @Query(returns => UserModel)
@@ -27,8 +30,8 @@ export class SignResolver {
 
         return await new Promise((resolve, reject) => {
             passport.authenticate('local', { session: false }, async (err, user: UserModel, info: InfoModel) => {
-                
-                resolve(this.userController.userAuth(user, err, info));
+
+                resolve(this.signController.userAuth(user, err, info));
             })(req, res, next);
         });
     }

@@ -1,13 +1,6 @@
 import "reflect-metadata";
 import { getManager, EntityManager } from "typeorm";
 import { UserModel } from "../models/userModel";
-import * as jwt from 'jsonwebtoken';
-import { ControllerInteface } from "../interfaces/controller/controllerInterface";
-import { InfoModel } from "../models/inforModel";
-import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
-import { Constants } from "../utility/global";
-import { ProfileModel } from "../models/profileModel";
-import { SocialModel } from "../models/socialModel";
 import { UserRepositoryInterface } from "../interfaces/repository/userRepositoryInterface";
 
 export class UserRepository implements UserRepositoryInterface {

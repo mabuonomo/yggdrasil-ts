@@ -25,19 +25,19 @@ export class SocialResolver {
         graph.setAccessToken(access_token);
 
         return await new Promise((resolve, reject) => {
-            var fb = graph.get(config.facebook_fields, async function (err, user_fb: ProfileSocialInterface) {
+            graph.get(config.facebook_fields, async function (err, user_fb: ProfileSocialInterface) {
 
-                var user = new UserModel();
                 if (err || !user_fb) {
-                    user.result = false;
-                    user.error = err;
-
-                    resolve(user);
+                    resolve(UserModel.createEmpty(err));
                 }
-                user = await (new SignController()).socialCheckUser(user_fb);
 
-                // success, create jwt token
-                resolve((new SignController()).userAuth(user, err, null));
+                try {
+                    let user = await (new SignController()).socialCheckUser(user_fb);
+                    // success, create jwt token
+                    resolve((new SignController()).userAuth(user, err, null));
+                } catch (e) {
+                    resolve(UserModel.createEmpty());
+                }
             });
         });
     }

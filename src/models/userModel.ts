@@ -11,7 +11,7 @@ import { InfoModel } from "./inforModel";
 @EntityORM()
 export class UserModel implements UserInterface {
 
-    @FieldQL()
+    @FieldQL({ nullable: true })
     @ObjectIdColumn()
     _id: string;
 
@@ -49,6 +49,8 @@ export class UserModel implements UserInterface {
 
     static createEmpty(error: string = '') {
         let user = new UserModel();
+        user._id = null;
+        user.name = '';
         user.result = false;
         user.error = error;
 

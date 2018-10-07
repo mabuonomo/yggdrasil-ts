@@ -25,16 +25,15 @@ export class SocialResolver {
         graph.setAccessToken(access_token);
 
         return await new Promise((resolve, reject) => {
-            graph.get(config.facebook_fields, async function (err, user_fb: ProfileSocialInterface) {
-                try {
-                    let user = await (new SignController()).socialCheckUser(user_fb);
-                    // success, create jwt token
-                    resolve((new SignController()).userAuth(user, err, null));
-                } catch (e) {
-                    let err: Error = e;
-                    resolve(UserModel.createEmpty(err.message));
-                }
-            });
+            graph.get(config.facebook_fields,
+                async function (err, user_fb: ProfileSocialInterface) {
+                    try {
+                        let user = await (new SignController()).socialCheckUser(user_fb);
+                        resolve((new SignController()).userAuth(user, err, null));
+                    } catch (e) {
+                        reject(e);
+                    }
+                });
         });
     }
 }

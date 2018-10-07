@@ -46,19 +46,4 @@ export class UserModel implements UserInterface {
     comparePassword = function (password) {
         return compareSync(password, this.password);
     }
-
-    static createEmpty(error: string = '') {
-
-        console.log("asdas");
-        console.log(error);
-        console.log("asdasd");
-        
-        let user = new UserModel();
-        user._id = null;
-        user.name = '';
-        user.result = false;
-        user.error = error;
-
-        return user;
-    }
 }

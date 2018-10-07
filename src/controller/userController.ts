@@ -26,7 +26,6 @@ export class UserController implements ControllerInteface {
      */
     public async getByEmail(email: String): Promise<UserModel> {
         var user = await this.userRepository.getByEmail(email);
-        console.log(user);
         if (user === undefined) {
             throw new UserNotFoundException(Constants.ERROR_USER_NOT_FOUND);
         }

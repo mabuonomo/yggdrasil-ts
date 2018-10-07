@@ -26,17 +26,13 @@ export class SocialResolver {
 
         return await new Promise((resolve, reject) => {
             graph.get(config.facebook_fields, async function (err, user_fb: ProfileSocialInterface) {
-
-                if (err || !user_fb) {
-                    resolve(UserModel.createEmpty(err));
-                }
-
                 try {
                     let user = await (new SignController()).socialCheckUser(user_fb);
                     // success, create jwt token
                     resolve((new SignController()).userAuth(user, err, null));
                 } catch (e) {
-                    resolve(UserModel.createEmpty());
+                    let err: Error = e;
+                    resolve(UserModel.createEmpty(err.message));
                 }
             });
         });

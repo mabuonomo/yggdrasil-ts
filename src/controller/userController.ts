@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { UserModel } from "../models/userModel";
 import { ControllerInteface } from "../interfaces/controller/controllerInterface";
 import { UserRepository } from "../repository/userRepository";
+import { UserNotFoundException } from "../exception/userNotFoundException";
+import { Constants } from "../utility/global";
 
 export class UserController implements ControllerInteface {
 
@@ -22,8 +24,14 @@ export class UserController implements ControllerInteface {
      * 
      * @param email 
      */
-    public async getByEmail(email: String) {
-        return await this.userRepository.getByEmail(email);
+    public async getByEmail(email: String): Promise<UserModel> {
+        var user = await this.userRepository.getByEmail(email);
+        console.log(user);
+        if (user === undefined) {
+            throw new UserNotFoundException(Constants.ERROR_USER_NOT_FOUND);
+        }
+
+        return user;
     }
 
     /**

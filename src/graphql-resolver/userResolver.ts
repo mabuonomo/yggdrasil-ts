@@ -19,7 +19,13 @@ export class UserResolver {
 
     @Query(returns => UserModel)
     async getByEmail(@Arg("email") email: string) {
-
-        return await this.userController.getByEmail(email);
+        try {
+            return await this.userController.getByEmail(email);
+        } catch (e) {
+            let err: Error = e;
+            console.log(err.message);
+            console.log("sdasdaaaaaaa");
+            return await UserModel.createEmpty(err.message);
+        }
     }
 }

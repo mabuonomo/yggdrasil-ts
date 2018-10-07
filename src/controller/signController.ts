@@ -7,6 +7,9 @@ import { Constants } from "../utility/global";
 import { ProfileModel } from "../models/profileModel";
 import { SocialModel } from "../models/socialModel";
 import { UserRepository } from "../repository/userRepository";
+import { AuthException } from "../exception/authException";
+import { UserNotFoundException } from "../exception/userNotFoundException";
+import { EmailNotFoundException } from "../exception/emailNotFoundException";
 
 export class SignController {
 

@@ -48,6 +48,11 @@ export class UserModel implements UserInterface {
     }
 
     static createEmpty(error: string = '') {
+
+        console.log("asdas");
+        console.log(error);
+        console.log("asdasd");
+        
         let user = new UserModel();
         user._id = null;
         user.name = '';

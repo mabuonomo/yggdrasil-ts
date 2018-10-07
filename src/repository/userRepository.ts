@@ -23,12 +23,7 @@ export class UserRepository implements UserRepositoryInterface {
      * @param email 
      */
     public async getByEmail(email: String) {
-        var user = await this.manager.findOne(UserModel, { profile: { email: email } })
-        if (!user) {
-            return UserModel.createEmpty();
-        }
-
-        return user;
+        return await this.manager.findOne(UserModel, { profile: { email: email } })
     }
 
     /**
@@ -36,12 +31,7 @@ export class UserRepository implements UserRepositoryInterface {
      * @param id 
      */
     public async getById(id: string) {
-        var user: UserModel = await this.manager.findOne(UserModel, id);
-        if (!user) {
-            return UserModel.createEmpty();
-        }
-
-        return user;
+        return await this.manager.findOne(UserModel, id);
     }
 
 }

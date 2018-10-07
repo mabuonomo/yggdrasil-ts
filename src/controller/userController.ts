@@ -22,7 +22,7 @@ export class UserController implements ControllerInteface {
 
     /**
      * 
-     * @param email 
+     * @param email
      */
     public async getByEmail(email: String): Promise<UserModel> {
         var user = await this.userRepository.getByEmail(email);

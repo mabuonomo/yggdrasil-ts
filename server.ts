@@ -25,7 +25,7 @@ const connection_db = {
     password: config.ormconfig.password,
     database: config.ormconfig.database,
     entities: [
-        UserModel
+        __dirname + "/src/models/*.js"
     ],
     synchronize: true,
     logging: true

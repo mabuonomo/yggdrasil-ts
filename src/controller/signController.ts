@@ -57,7 +57,7 @@ export class SignController {
         }
 
         if (profile.email === undefined) {
-            throw new EmailNotFoundException(Constants.social_email_missing);
+            throw new EmailNotFoundException(Constants.ERROR_SOCIAL_EMAIL_MISSING);
         }
 
         var user = await this.userRepository.getByEmail(profile.email);

@@ -18,10 +18,10 @@ export default class PassportCustom {
 
                 var user = await userController.getByEmail(email);
                 if (!user || !user.comparePassword(password)) {
-                    return cb(null, false, { message: Constants.login_fail_text });
+                    return cb(null, false, { message: Constants.ERROR_LOGIN_FAIL });
                 }
 
-                return cb(null, user, { message: Constants.login_ok_text });
+                return cb(null, user, { message: Constants.OK_LOGIN });
             }
         ));
 

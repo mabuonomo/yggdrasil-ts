@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { UserModel } from "../src/models/userModel";
 import { createConnection, Connection } from "typeorm";
+import { ProfileModel } from '../src/models/profileModel';
 
 const config = require("../config.json");
 
@@ -32,6 +33,30 @@ describe('User', function () {
             var user = new UserModel();
             var user_saved = await conn.manager.save(user);
             expect(user_saved._id).not.undefined;
+            conn.close();
+        });
+    });
+
+    describe('User getByEmail found', function () {
+        it('should return user is not undefined', async function () {
+            var conn: Connection = await createConnection(connection);
+            var user = new UserModel();
+            user.profile =new ProfileModel();
+            user.profile.email= "email@email.it";
+            await conn.manager.save(user);
+
+            var user_found = await conn.manager.findOne(UserModel, { profile: { email: user.profile.email } })
+            expect(user_found).not.undefined;
+            conn.close();
+        });
+    });
+
+    describe('User getByEmail not found', function () {
+        it('should return user undefined', async function () {
+            var conn: Connection = await createConnection(connection);
+            var user_found = await conn.manager.findOne(UserModel, { profile: { email: 'nothing' } })
+            expect(user_found).undefined;
+            conn.close();
         });
     });
 });

@@ -8,7 +8,7 @@ A boilerplate of a nodejs server, written in Typescript, with JWT authentication
 
 ### First
 * Compile the ts files.
-* Copy ormconfig.json and config.json into dist folder
+* Copy and rename config.json.dist, to config.json, into dist folder
 
 ### Run
 ```bash

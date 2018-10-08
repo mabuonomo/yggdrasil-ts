@@ -17,6 +17,20 @@ import * as passport from 'passport';
 const config = require('./config.json');
 const port = process.env.PORT || config.express_port;
 
+const connection_db = {
+    type: config.ormconfig.type,
+    host: config.ormconfig.host,
+    port: config.ormconfig.port,
+    username: config.ormconfig.username,
+    password: config.ormconfig.password,
+    database: config.ormconfig.database,
+    entities: [
+        UserModel
+    ],
+    synchronize: true,
+    logging: true
+}
+
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -47,22 +61,7 @@ class App {
     }
 
     private initDatabase() {
-
-        createConnection({
-            type: config.ormconfig.type,
-            host: config.ormconfig.host,
-            port: config.ormconfig.port,
-            username: config.ormconfig.username,
-            password: config.ormconfig.password,
-            database: config.ormconfig.database,
-            entities: [
-                UserModel
-            ],
-            synchronize: true,
-            logging: true
-        }).then(connection => {
-            // here you can start to work with your entities
-        }).catch(error => console.log(error));
+        createConnection(connection_db);
     }
 
     private async setRouter() {

@@ -15,11 +15,30 @@
     ],
     "ormconfig": {
         "type": "mongodb",
-        "host": "localhost",
+        "host": "127.0.0.1",
         "port": 27017,
         "username": "",
         "password": "",
         "database": "yggdrasil",
+        "synchronize": true,
+        "logging": false,
+        "entities": [
+            "api/graphql-type/*.ts"
+        ],
+        "migrations": [
+            "src/migration/**/*.ts"
+        ],
+        "subscribers": [
+            "src/subscriber/**/*.ts"
+        ]
+    },
+    "ormconfig_test": {
+        "type": "mongodb",
+        "host": "127.0.0.1",
+        "port": 27017,
+        "username": "",
+        "password": "",
+        "database": "yggdrasil_test",
         "synchronize": true,
         "logging": false,
         "entities": [

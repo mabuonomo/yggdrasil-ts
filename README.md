@@ -20,6 +20,12 @@ npm start run
 npm test
 ```
 
+### Run in Docker
+```bash
+docker-compose build
+docker-compose up
+```
+
 ## Endpoints
 
 There are two endpoints, /sign and /api.

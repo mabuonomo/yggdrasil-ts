@@ -6,12 +6,12 @@ import { ProfileModel } from '../src/models/profileModel';
 const config = require("../config.json");
 
 let connection = {
-    type: config.ormconfig.type,
-    host: config.ormconfig.host,
-    port: config.ormconfig.port,
-    username: config.ormconfig.username,
-    password: config.ormconfig.password,
-    database: config.ormconfig.database,
+    type: config.ormconfig_test.type,
+    host: config.ormconfig_test.host,
+    port: config.ormconfig_test.port,
+    username: config.ormconfig_test.username,
+    password: config.ormconfig_test.password,
+    database: config.ormconfig_test.database,
     entities: [
         UserModel
     ],

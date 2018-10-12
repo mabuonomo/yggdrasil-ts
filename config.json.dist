@@ -15,7 +15,7 @@
     ],
     "ormconfig": {
         "type": "mongodb",
-        "host": "127.0.0.1",
+        "host": "mongo",
         "port": 27017,
         "username": "",
         "password": "",
@@ -34,7 +34,7 @@
     },
     "ormconfig_test": {
         "type": "mongodb",
-        "host": "127.0.0.1",
+        "host": "mongo",
         "port": 27017,
         "username": "",
         "password": "",

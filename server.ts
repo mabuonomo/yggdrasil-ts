@@ -10,7 +10,6 @@ import { SocialResolver } from "./src/graphql-resolver/socialResolver";
 
 import * as graphqlHTTP from "express-graphql";
 import { createConnection } from "typeorm";
-import { UserModel } from "./src/models/userModel";
 import PassportCustom from './src/utility/passport';
 import * as passport from 'passport';
 

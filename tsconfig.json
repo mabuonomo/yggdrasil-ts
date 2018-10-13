@@ -6,6 +6,7 @@
         "noImplicitAny": false,
         "removeComments": true,
         "sourceMap": true,
+        "resolveJsonModule": true,
         "experimentalDecorators": true,
         "lib": [
             "es2016",

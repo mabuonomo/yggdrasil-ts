@@ -1,11 +1,7 @@
 ## YGGDRASIL
 A boilerplate of a nodejs server, written in Typescript, with JWT authentication, GraphQL and TypeORM
 
-## Prerequisites
-* MongoDB
-* NPM 6.2+
-* NodeJS 10.9+
-
+## Run
 ### First
 * Compile the ts files.
 

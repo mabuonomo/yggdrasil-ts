@@ -1,23 +1,22 @@
 import { expect } from 'chai';
 import { UserModel } from "../src/models/userModel";
-import { createConnection, Connection } from "typeorm";
+import { createConnection, Connection, ConnectionOptions } from "typeorm";
 import { ProfileModel } from '../src/models/profileModel';
+import * as config from '../config';
 
-const config = require("../config.json");
-
-let connection = {
-    type: config.ormconfig_test.type,
-    host: config.ormconfig_test.host,
-    port: config.ormconfig_test.port,
-    username: config.ormconfig_test.username,
-    password: config.ormconfig_test.password,
-    database: config.ormconfig_test.database,
+const connection: ConnectionOptions = {
+    type: config.Config.ORMCONFIG_TYPE,
+    host: config.Config.ORMCONFIG_HOST,
+    port: config.Config.ORMCONFIG_PORT,
+    username: config.Config.ORMCONFIG_USERNAME,
+    password: config.Config.ORMCONFIG_PASSWORD,
+    database: config.Config.ORMCONFIG_TEST_DATABASE,
     entities: [
-        UserModel
+        __dirname + "/src/models/*.js"
     ],
-    synchronize: true,
-    logging: true
-};
+    synchronize: config.Config.ORMCONFIG_SYNCRONIZE,
+    logging: config.Config.ORMCONFIG_LOGGING
+}
 
 describe('User', function () {
     describe('User init', function () {

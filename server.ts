@@ -9,25 +9,25 @@ import { SignResolver } from "./src/graphql-resolver/signResolver";
 import { SocialResolver } from "./src/graphql-resolver/socialResolver";
 
 import * as graphqlHTTP from "express-graphql";
-import { createConnection } from "typeorm";
+import { createConnection, ConnectionOptions } from "typeorm";
 import PassportCustom from './src/utility/passport';
 import * as passport from 'passport';
 
-const config = require('./config.json');
-const port = process.env.PORT || config.express_port;
+import * as config from './config';
+const port = process.env.PORT || config.Config.EXPRESS_PORT;
 
-const connection_db = {
-    type: config.ormconfig.type,
-    host: config.ormconfig.host,
-    port: config.ormconfig.port,
-    username: config.ormconfig.username,
-    password: config.ormconfig.password,
-    database: config.ormconfig.database,
+const connection_db: ConnectionOptions = {
+    type: config.Config.ORMCONFIG_TYPE,
+    host: config.Config.ORMCONFIG_HOST,
+    port: config.Config.ORMCONFIG_PORT,
+    username: config.Config.ORMCONFIG_USERNAME,
+    password: config.Config.ORMCONFIG_PASSWORD,
+    database: config.Config.ORMCONFIG_DATABASE,
     entities: [
         __dirname + "/src/models/*.js"
     ],
-    synchronize: true,
-    logging: true
+    synchronize: config.Config.ORMCONFIG_SYNCRONIZE,
+    logging: config.Config.ORMCONFIG_LOGGING
 }
 
 // Creates and configures an ExpressJS web server.

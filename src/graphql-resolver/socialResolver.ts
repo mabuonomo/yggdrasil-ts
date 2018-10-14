@@ -5,8 +5,7 @@ import * as graph from 'fbgraph';
 import { UserController } from "../controller/userController";
 import { ProfileSocialInterface } from "../interfaces/models/profileSocialInterface";
 import { SignController } from "../controller/signController";
-
-const config = require('../../config.json');
+import * as config from '../../config';
 
 @Resolver(UserModel)
 export class SocialResolver {
@@ -25,7 +24,7 @@ export class SocialResolver {
         graph.setAccessToken(access_token);
 
         return await new Promise((resolve, reject) => {
-            graph.get(config.facebook_fields,
+            graph.get(config.Config.FACEBOOK_FIELDS,
                 async function (err, user_fb: ProfileSocialInterface) {
                     try {
                         let user = await (new SignController()).socialCheckUser(user_fb);

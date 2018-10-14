@@ -23,7 +23,7 @@ export class SignController {
      * @param user 
      */
     public createJwtToken(user: UserModel) {
-        return jwt.sign(JSON.stringify(user), 'your_jwt_secret'); 7
+        return jwt.sign(JSON.stringify(user), 'your_jwt_secret');
     }
 
     /**

@@ -16,20 +16,6 @@ import * as passport from 'passport';
 import * as config from './config';
 const port = process.env.PORT || config.Config.EXPRESS_PORT;
 
-const connection_db: ConnectionOptions = {
-    type: config.Config.ORMCONFIG_TYPE,
-    host: config.Config.ORMCONFIG_HOST,
-    port: config.Config.ORMCONFIG_PORT,
-    username: config.Config.ORMCONFIG_USERNAME,
-    password: config.Config.ORMCONFIG_PASSWORD,
-    database: config.Config.ORMCONFIG_DATABASE,
-    entities: [
-        __dirname + "/src/models/*.js"
-    ],
-    synchronize: config.Config.ORMCONFIG_SYNCRONIZE,
-    logging: config.Config.ORMCONFIG_LOGGING
-}
-
 // Creates and configures an ExpressJS web server.
 class App {
 
@@ -60,7 +46,7 @@ class App {
     }
 
     private initDatabase() {
-        createConnection(connection_db);
+        createConnection(config.Config.DB_CONNECTION);
     }
 
     private async setRouter() {

@@ -4,20 +4,6 @@ import { createConnection, Connection, ConnectionOptions } from "typeorm";
 import { ProfileModel } from '../src/models/profileModel';
 import * as config from '../config';
 
-const connection: ConnectionOptions = {
-    type: config.Config.ORMCONFIG_TYPE,
-    host: config.Config.ORMCONFIG_HOST,
-    port: config.Config.ORMCONFIG_PORT,
-    username: config.Config.ORMCONFIG_USERNAME,
-    password: config.Config.ORMCONFIG_PASSWORD,
-    database: config.Config.ORMCONFIG_TEST_DATABASE,
-    entities: [
-        __dirname + "/src/models/*.js"
-    ],
-    synchronize: config.Config.ORMCONFIG_SYNCRONIZE,
-    logging: config.Config.ORMCONFIG_LOGGING
-}
-
 describe('User', function () {
     describe('User init', function () {
         it('should return _id is undefined', function () {
@@ -28,7 +14,7 @@ describe('User', function () {
 
     describe('User create', function () {
         it('should return _id is not undefined', async function () {
-            var conn: Connection = await createConnection(connection);
+            var conn: Connection = await createConnection(config.Config.DB_CONNECTION_TEST);
             var user = new UserModel();
             var user_saved = await conn.manager.save(user);
             expect(user_saved._id).not.undefined;
@@ -38,7 +24,7 @@ describe('User', function () {
 
     describe('User getByEmail found', function () {
         it('should return user is not undefined', async function () {
-            var conn: Connection = await createConnection(connection);
+            var conn: Connection = await createConnection(config.Config.DB_CONNECTION_TEST);
             var user = new UserModel();
             user.profile =new ProfileModel();
             user.profile.email= "email@email.it";
@@ -52,7 +38,7 @@ describe('User', function () {
 
     describe('User getByEmail not found', function () {
         it('should return user undefined', async function () {
-            var conn: Connection = await createConnection(connection);
+            var conn: Connection = await createConnection(config.Config.DB_CONNECTION_TEST);
             var user_found = await conn.manager.findOne(UserModel, { profile: { email: 'nothing' } })
             expect(user_found).undefined;
             conn.close();

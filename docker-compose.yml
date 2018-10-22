@@ -1,17 +1,18 @@
-version: "2"
+version: "3"
 services:
   app:
-    container_name: app
+    container_name: app_yggdrasil
     restart: always
     build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./dist:/usr/src/app/dist
     links:
       - mongo
+    volumes:
+      - .:/home/app/
+      - /home/app/node_modules  
+    ports:
+      - "3001:3000"
   mongo:
-    container_name: mongo
+    container_name: mongo_yggdrasil
     image: mongo
     volumes:
       - mongodata:/data/db

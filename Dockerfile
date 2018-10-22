@@ -1,8 +1,8 @@
 FROM node:latest
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
+EXPOSE 3000 27017
+RUN mkdir -p /home/app
+WORKDIR /home/app
+COPY . /home/app
 RUN npm install
 RUN npm install bcrypt
-EXPOSE 3000
-CMD [ "npm", "start"]
+CMD ["npm", "start"]

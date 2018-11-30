@@ -6,11 +6,12 @@ services:
     build: .
     links:
       - mongo
+    working_dir: /home/app
+    command: npm install
     volumes:
       - .:/home/app/
-      - /home/app/node_modules  
     ports:
-      - "3001:3000"
+      - "3000:3000"
   mongo:
     container_name: mongo_yggdrasil
     image: mongo

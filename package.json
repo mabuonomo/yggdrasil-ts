@@ -38,7 +38,7 @@
     "class-validator": "^0.9.1",
     "cors": "^2.8.4",
     "express": "^4.16.4",
-    "express-fileupload": "^0.4.0",
+    "express-fileupload": "^1.1.9",
     "express-graphql": "^0.6.12",
     "fbgraph": "^1.4.4",
     "googleapis": "^33.0.0",

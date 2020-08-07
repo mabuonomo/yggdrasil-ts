@@ -34,7 +34,7 @@
     "@types/passport-jwt": "^3.0.1",
     "@types/passport-local": "^1.0.33",
     "bcrypt": "^3.0.0",
-    "class-transformer": "^0.1.9",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.9.1",
     "cors": "^2.8.4",
     "express": "^4.16.4",

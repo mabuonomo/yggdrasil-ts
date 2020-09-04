@@ -54,7 +54,7 @@
     "q": "^1.5.1",
     "reflect-metadata": "^0.1.12",
     "threads": "^0.10.1",
-    "type-graphql": "^0.12.3",
+    "type-graphql": "^0.17.6",
     "typegoose": "^5.4.1",
     "typeorm": "^0.2.7"
   }
